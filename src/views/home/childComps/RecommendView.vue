@@ -36,8 +36,8 @@ export default {
     flex: 10;
 }
 .recommend-item img{
-    width: 200px;
-    height: 200px;
+    width: 80px;
+    height: 80px;
 }
 .recommend-item div{
     padding-top: 15px;
