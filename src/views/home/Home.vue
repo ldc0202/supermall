@@ -3,7 +3,7 @@
      <nav-bar class="home-nav"><div slot="center">购物街</div></nav-bar>
        <!-- <img v-for="item in banners" :src="item.image" :key="item.link" alt=""> -->
        <home-swiper :banners="banners"/>
-       <recommend-view/>
+       <recommend-view :recommends="recommends"/>
   </div>
 </template>
 

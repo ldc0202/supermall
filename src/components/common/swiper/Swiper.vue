@@ -96,10 +96,10 @@ export default {
         },
         //设置滚动的位置
         setTransform: function (position){
-        // console.log(position)
+            console.log(position)
             this.swiperStyle.transform  = `translate3d(${position}px,0,0)`;
-            this.swiperStyle['-webkit-transform']=`translate3d(${position}px),0,0`;
-            this.swiperStyle['-ms-transform']=`translate3d(${position}px),0,0`;
+            this.swiperStyle['-webkit-transform']=`translate3d(${position}px,0,0)`;
+            this.swiperStyle['-ms-transform']=`translate3d(${position}px,0,0)`;
         },
         //操作DOM，在DOM前后添加slide
         handleDom: function(){
