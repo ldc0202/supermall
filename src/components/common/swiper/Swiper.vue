@@ -52,7 +52,7 @@ export default {
          this.handleDom();
          //2.开启定时器
          this.startTimer();
-     }, 100);
+     }, 3000);
    },
    methods: {
         //    定时器
@@ -100,6 +100,8 @@ export default {
             this.swiperStyle.transform  = `translate3d(${position}px,0,0)`;
             this.swiperStyle['-webkit-transform']=`translate3d(${position}px),0,0`;
             this.swiperStyle['-ms-transform']=`translate3d(${position}px),0,0`;
+
+            
         },
         //操作DOM，在DOM前后添加slide
         handleDom: function(){
@@ -162,7 +164,7 @@ export default {
         //控制上一个，下一个
         previous:function(){
             this.changeItem(-1);
-            console.log("-1");
+            //console.log(-1);
         },
         next:function(){
             this.changeItem(1);
