@@ -2,11 +2,14 @@
   <div id="home">
      <nav-bar class="home-nav"><div slot="center">购物街</div></nav-bar>
        <!-- <img v-for="item in banners" :src="item.image" :key="item.link" alt=""> -->
-       <home-swiper :banners="banners"/>
-       <recommend-view :recommends="recommends"/>
-       <feature-view/>
-       <tab-control :titles="['流行','新款','精选']" class="tab-control" @tabClick="tabClick"></tab-control>
-       <goods-list :goods="showgoods"/>
+       <scroll class="content">
+          <home-swiper :banners="banners"/>
+          <recommend-view :recommends="recommends"/>
+          <!-- 本周流行 -->
+          <feature-view/>
+          <tab-control :titles="['流行','新款','精选']" class="tab-control" @tabClick="tabClick"></tab-control>
+          <goods-list :goods="showgoods"/> 
+       </scroll>
        <ul>
          <li>列表1</li>
          <li>列表2</li>
@@ -26,6 +29,7 @@ import FeatureView from './childComps/FeatureView'
 
 import TabControl from 'components/content/tabControl/TabControl'
 import GoodsList from '../../components/content/goods/GoodsList'
+import Scroll from '../../components/common/scroll/Scroll'
 export default {
   components: {
     NavBar,
@@ -33,7 +37,8 @@ export default {
     RecommendView,
     FeatureView,
     TabControl,
-    GoodsList
+    GoodsList,
+    Scroll
   },
   data() {
     return {
@@ -99,9 +104,12 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 #home{
- padding-top: 44px;
+ /* padding-top: 44px; */
+ /* 100%视口高度 vh->vieport height */
+ height: 100vh;
+ position: relative;
 }
 .home-nav{
   background-color: var(--color-tint);
@@ -116,5 +124,17 @@ export default {
   position: sticky;
   top: 44px;
   z-index: 10;
+}
+.content{
+  /* height: calc(100%-93); */
+  /* height: 300px; */
+  /* height: calc(100%-93px); */
+  /* height: 100%;
+  overflow: hidden;
+  margin-top: 44px; */
+
+  position: absolute;
+  top: 44px;
+  bottom: 52px;
 }
 </style>
