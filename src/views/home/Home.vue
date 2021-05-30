@@ -2,7 +2,7 @@
   <div id="home">
      <nav-bar class="home-nav"><div slot="center">购物街</div></nav-bar>
        <!-- <img v-for="item in banners" :src="item.image" :key="item.link" alt=""> -->
-       <scroll class="content">
+       <scroll ref="scroll" class="content" :probe-type="3" @scroll="scrollHandler" :pull-up-load="true" @pullingUp="loadMore">
           <home-swiper :banners="banners"/>
           <recommend-view :recommends="recommends"/>
           <!-- 本周流行 -->
@@ -10,13 +10,8 @@
           <tab-control :titles="['流行','新款','精选']" class="tab-control" @tabClick="tabClick"></tab-control>
           <goods-list :goods="showgoods"/> 
        </scroll>
-       <ul>
-         <li>列表1</li>
-         <li>列表2</li>
-         <li>列表3</li>
-         <li>列表4</li>
-         
-       </ul>
+        <back-top @click.native="backClick"  v-show="isShowBackTop"/>
+       
   </div>
 </template>
 
@@ -28,8 +23,9 @@ import {getHomeMultidata,getHomeGoods} from 'network/home'
 import FeatureView from './childComps/FeatureView'
 
 import TabControl from 'components/content/tabControl/TabControl'
-import GoodsList from '../../components/content/goods/GoodsList'
-import Scroll from '../../components/common/scroll/Scroll'
+import GoodsList from 'components/content/goods/GoodsList'
+import Scroll from 'components/common/scroll/Scroll'
+import BackTop from 'components/content/backTop/BackTop'
 export default {
   components: {
     NavBar,
@@ -38,7 +34,8 @@ export default {
     FeatureView,
     TabControl,
     GoodsList,
-    Scroll
+    Scroll,
+    BackTop
   },
   data() {
     return {
@@ -50,7 +47,8 @@ export default {
         'new': {page: 0,list: []},
         'sell': {page: 0,list: []}
       },
-      currentType: 'pop'
+      currentType: 'pop',
+      isShowBackTop:false
     }
   },
   created() {
@@ -67,6 +65,18 @@ export default {
     }
   },
   methods:{
+    backClick(){
+       this.$refs.scroll.scrollTo(0,0);
+    },
+    scrollHandler(position){
+      this.isShowBackTop=(-position.y)>1000
+      //  console.log(this.isShowBackTop)
+      // console.log(position)
+    },
+    loadMore(){
+      // console.log('下拉加载更多')
+      this.getHomeGoods(this.currentType);
+    },
     tabClick(index){
        switch (index) {
          case 0:
@@ -98,6 +108,8 @@ export default {
         console.log(res)
         this.goods[type].list.push(...res.data.list)
         this.goods[type].page +=1
+
+        this.$refs.scroll.finishPullUp()
       })
     }
   }
