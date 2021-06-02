@@ -1,7 +1,7 @@
 <template>
-  <div class="wrapper">
-<ul class="content">
-  <button @click="clickhandler">按钮</button>
+  <div class="wrapper" ref="wrapper">
+   <ul class="content">
+   <button @click="clickhandler">按钮</button>
     <li>分类列表1</li>
     <li>分类列表2</li>
     <li>分类列表3</li>
@@ -61,8 +61,7 @@ import BScroll from 'better-scroll'
 export default {
 
   mounted(){
-      
-      const scroll= new BScroll(document.querySelector('.wrapper'),{
+      const scroll= new BScroll(this.$refs.wrapper,{
         probeType:3,
         pullUpLoad:true
       })
@@ -85,10 +84,10 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .wrapper{
   height: 200px;
-  background-color: red;
+  background-color: #fff;
   overflow: hidden;
   /* overflow-y: scroll; */
 }
