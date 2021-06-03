@@ -29,7 +29,13 @@ const routes =[
       },
       {
         path: '/detail/:iid',
-        component: Detail
+        component: Detail,
+        beforeEnter:(to,from,next)=>{
+          // to.update();
+        //  console.log(from)
+         next()
+         }
+       
       }
 ]
 const router=new VueRouter({
