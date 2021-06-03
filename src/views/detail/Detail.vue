@@ -1,9 +1,17 @@
 <template>
-  <div style="{color:#cccccc}">{{iid}}</div>
+  <div id="detail">
+    <detail-nav-bar>
+
+    </detail-nav-bar>
+  </div>
 </template>
 
 <script>
+import DetailNavBar from './childcomps/DetailNavBar.vue'
+
+
 export default {
+  components: { DetailNavBar },
   data(){
       return{
           iid:null
