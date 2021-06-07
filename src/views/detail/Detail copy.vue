@@ -24,8 +24,8 @@ import Scroll from 'components/common/scroll/Scroll'
 import DetailGoodsInfo from './childcomps/DetailGoodsInfo'
 import DetailParamInfo from './childcomps/DetailParamInfo'
 import DetailCommentInfo from './childcomps/DetailCommentInfo'
-import GoodsList from '../../components/content/goods/GoodsList'
-import {itemListenerMixin} from '../../common/mixin'
+import GoodsList from 'components/content/goods/GoodsList'
+import itemListenerMixin from 'common/mixin'
 export default {
   name:"Detail",
   components: { 
@@ -39,7 +39,7 @@ export default {
     DetailCommentInfo,
     GoodsList
     },
-    mixins:[itemListenerMixin],
+  mixins:[itemListenerMixin],
   data(){
       return{
           iid:null,
@@ -49,7 +49,8 @@ export default {
           detailInfo:{},
           paramInfo:{},
           commentInfo:{},
-          recommends:[]
+          recommends:[],
+          itemImgListener:null
       }
   },
   created(){
@@ -85,20 +86,20 @@ export default {
          this.recommends=res.data.list
        })
   },
-  mounted(){
-    // const refresh=debounce(this.$refs.scroll.refresh,500)
-    //  //监听item中的图片加载完成
-    //  this.itemImgListener=()=>{
-    //   // console.log('---')
-    //   // this.$refs.scroll.refresh();
-    //   refresh()
-    // }
-    // this.$bus.$on('itemImageLoad',this.itemImgListener)
-  },
   methods:{
     imageLoad(){
-       this.$refs.scroll.refresh()
+     this.$refs.scroll.refresh()
     }
+  },
+  // mounted(){
+  //   let newRefresh= debouce(this.$refs.detailcontent.refresh,300)
+  //   this.itemImgListener= function(){
+  //      newRefresh()
+  //   }
+  //   this.$bus.$on('itemImgLoad',this.itemImgListener)
+  // },
+  destroyed(){
+      this.$bus.$off('itemImgLoad',this.itemImgListener)
   }
   
 }

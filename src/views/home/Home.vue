@@ -27,7 +27,7 @@ import TabControl from 'components/content/tabControl/TabControl'
 import GoodsList from 'components/content/goods/GoodsList'
 import Scroll from 'components/common/scroll/Scroll'
 import BackTop from 'components/content/backTop/BackTop'
-import {debounce} from '@/common/utils'
+import {itemListenerMixin} from 'common/mixin'
 export default {
   components: {
     NavBar,
@@ -39,6 +39,7 @@ export default {
     Scroll,
     BackTop
   },
+  mixins:[itemListenerMixin],
   data() {
     return {
       banners: [],
@@ -53,7 +54,8 @@ export default {
       isShowBackTop:false,
       tabOffsetTop:0,
       isTabFixed:false,
-      saveY:0
+      saveY:0,
+      itemImgListener:null
     }
   },
   created() {
@@ -65,13 +67,14 @@ export default {
     this.getHomeGoods('sell')
   },
   mounted(){
-    const refresh=debounce(this.$refs.scroll.refresh,500)
-     //监听item中的图片加载完成
-    this.$bus.$on('itemImageLoad',()=>{
-      // console.log('---')
-      // this.$refs.scroll.refresh();
-      refresh()
-    })
+    // const refresh=debounce(this.$refs.scroll.refresh,500)
+    //  //监听item中的图片加载完成
+    //  this.itemImgListener=()=>{
+    //   // console.log('---')
+    //   // this.$refs.scroll.refresh();
+    //   refresh()
+    // }
+    // this.$bus.$on('itemImageLoad',this.itemImgListener)
   },
   destroyed(){
       console.log('home destroyed')
@@ -79,9 +82,13 @@ export default {
   activated(){
      this.$refs.scroll.scrollTo(0,this.saveY,0)
      this.$refs.scroll.refresh()
+      this.$bus.$on('itemImageLoad',this.itemImgListener)
   },
   deactivated(){
+    //1.保存y值
      this.saveY=this.$refs.scroll.getScrollY()
+    //2.取消全局事件的监听
+    this.$bus.$off('itemImageLoad',this.itemImgListener)
   },
   computed:{
     showgoods(){
