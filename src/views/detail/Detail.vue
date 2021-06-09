@@ -1,7 +1,7 @@
 <template>
   <div id="detail">
-    <detail-nav-bar class="detail-nav-bar" @titleClick="titleClick"></detail-nav-bar>
-    <scroll ref="scroll" class="detail-content" :pullUpLoad="true" >
+    <detail-nav-bar class="detail-nav-bar" @titleClick="titleClick" ref="nav"></detail-nav-bar>
+    <scroll ref="scroll" class="detail-content" :pullUpLoad="true" @scroll="contentScroll" :probeType="3" >
       <!-- 详情轮播图 -->
       <detail-swiper :top-images="topImages"/>
       <!-- 详情基本信息 -->
@@ -59,7 +59,8 @@ export default {
           commentInfo:{},
           recommends:[],
           theneTopYs:[],
-          getThemeTopY:null
+          getThemeTopY:null,
+          currentIndex:0
       }
   },
   created(){
@@ -124,6 +125,20 @@ export default {
     titleClick(index){
       console.log(index)
        this.$refs.scroll.scrollTo(0,-this.theneTopYs[index],100)
+    },
+    contentScroll(position){
+      //1.获取Y值
+       const positionY = -position.y;
+      console.log(positionY)
+       //2.positionY数组theneTopYs的值之间来确定index的值
+       let length=this.theneTopYs.length;
+       for(let i=0;i<length;i++){
+         if(this.currentIndex!== i && ((i<length-1 && positionY>=this.getThemeTopY[i] && positionY<this.getThemeTopY[i+1]) || (i===length-1 && positionY >= this.getThemeTopY[i]))){
+           this.currentIndex=i;
+           console.log(this.currentIndex)
+           this.$refs.nav.currentIndex=this.currentIndex;
+         }
+       }
     }
   }
   
