@@ -1,14 +1,21 @@
 <template>
   <div id="detail">
-    <detail-nav-bar class="detail-nav-bar"></detail-nav-bar>
+    <detail-nav-bar class="detail-nav-bar" @titleClick="titleClick"></detail-nav-bar>
     <scroll ref="scroll" class="detail-content" :pullUpLoad="true" >
+      <!-- 详情轮播图 -->
       <detail-swiper :top-images="topImages"/>
+      <!-- 详情基本信息 -->
       <detail-base-info :goods="goods"></detail-base-info>
+      <!-- 详情店铺信息 -->
       <detail-shop-info :shop="shop"/>
+      <!-- 详情商品信息 -->
       <detail-goods-info :detailInfo="detailInfo" @imageLoad="imageLoad"/>
-      <detail-param-info :paramInfo="paramInfo"/>
-      <detail-comment-info :commentInfo="commentInfo"/>
-      <goods-list :goods="recommends"/>
+      <!-- 详情参数信息 -->
+      <detail-param-info ref="params" :paramInfo="paramInfo"/>
+      <!-- 详情评论信息 -->
+      <detail-comment-info ref="comment" :commentInfo="commentInfo"/>
+      <!-- 详情推荐信息 -->
+      <goods-list ref="recommend" :goods="recommends"/>
       
     </scroll>
   </div>
@@ -26,6 +33,7 @@ import DetailParamInfo from './childcomps/DetailParamInfo'
 import DetailCommentInfo from './childcomps/DetailCommentInfo'
 import GoodsList from '../../components/content/goods/GoodsList'
 import {itemListenerMixin} from '../../common/mixin'
+import {debounce} from '@/common/utils'
 export default {
   name:"Detail",
   components: { 
@@ -49,13 +57,15 @@ export default {
           detailInfo:{},
           paramInfo:{},
           commentInfo:{},
-          recommends:[]
+          recommends:[],
+          theneTopYs:[],
+          getThemeTopY:null
       }
   },
   created(){
     //1.保存传入的iid
       this.iid=this.$route.params.iid
-      console.log('-------'+ this.iid)
+      // console.log('-------'+ this.iid)
     //2.根据iid请求数据
        getDetail(this.iid).then(res=>{
         
@@ -65,7 +75,7 @@ export default {
          //2.获取顶部的图片轮播数据
         this.topImages = data.itemInfo.topImages;
         //3.获取商品信息
-        console.log(data.columns)
+        // console.log(data.columns)
         this.goods=new Goods(data.itemInfo,data.columns,data.shopInfo.services)
         //4.创建店铺信息的对像
         this.shop=new Shop(data.shopInfo)
@@ -77,13 +87,23 @@ export default {
         if(data.rate.cRate !== 0){
           this.commentInfo=data.rate.list[0]
         }
-        
+        //根据最新的数据，对应的DOM是已经被渲染出来回调的函数
+        this.$nextTick(()=>{
+          
+        })
        })
        //请求推荐数扰
        getRecommend().then(res=>{
-         console.log(res)
+        //  console.log(res)
          this.recommends=res.data.list
        })
+       this.getThemeTopY=debounce(()=>{
+           this.theneTopYs[0]=0;
+           this.theneTopYs[1]=this.$refs.params.$el.offsetTop;
+           this.theneTopYs[2]=this.$refs.comment.$el.offsetTop;
+           this.theneTopYs[3]=this.$refs.recommend.$el.offsetTop;
+           console.log('property'+this.theneTopYs)
+       },100)
   },
   mounted(){
     // const refresh=debounce(this.$refs.scroll.refresh,500)
@@ -97,7 +117,13 @@ export default {
   },
   methods:{
     imageLoad(){
+      // console.log('detailGoodInfo----imageLoad')
        this.$refs.scroll.refresh()
+         this.getThemeTopY()
+    },
+    titleClick(index){
+      console.log(index)
+       this.$refs.scroll.scrollTo(0,-this.theneTopYs[index],100)
     }
   }
   

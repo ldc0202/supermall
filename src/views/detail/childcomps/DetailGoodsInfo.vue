@@ -39,11 +39,11 @@ import {debounce} from '@/common/utils'
         //  this.$emit('imageLoad')
         // }
          this.refresh()
-         console.log("--------")
+        //  console.log("--------")
       },
       emitFun(){
          this.$emit('imageLoad')
-          //console.log("+++++")
+          // console.log("imageLoad+++++")
       }
     },
     watch:{
