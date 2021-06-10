@@ -135,8 +135,14 @@ export default {
       // console.log(positionY)
        //2.positionY数组theneTopYs的值之间来确定index的值
        let length=this.theneTopYs.length;
-       for(let i=0;i<length;i++){
-         if(this.currentIndex!== i && ((i<length-1 && positionY>=this.getThemeTopY[i] && positionY<this.getThemeTopY[i+1]) || (i===length-1 && positionY >= this.getThemeTopY[i]))){
+      //  for(let i=0;i<length;i++){
+      //    if(this.currentIndex!== i && ((i<length-1 && positionY>=this.theneTopYs[i] && positionY<this.theneTopYs[i+1]) || (i===length-1 && positionY >= this.theneTopYs[i]))){
+      //      this.currentIndex=i;
+      //      this.$refs.nav.currentIndex=this.currentIndex;
+      //    }
+      //  }
+      for(let i=0;i<length-1;i++){
+         if(this.currentIndex!== i && positionY>=this.theneTopYs[i] && positionY<this.theneTopYs[i+1]){
            this.currentIndex=i;
           //  console.log(this.currentIndex)
            this.$refs.nav.currentIndex=this.currentIndex;
