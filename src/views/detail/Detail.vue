@@ -16,8 +16,9 @@
       <detail-comment-info ref="comment" :commentInfo="commentInfo"/>
       <!-- 详情推荐信息 -->
       <goods-list ref="recommend" :goods="recommends"/>
-      
     </scroll>
+      <!-- 底部工具栏 -->
+      <detail-bottom-bar></detail-bottom-bar>
   </div>
 </template>
 
@@ -34,6 +35,7 @@ import DetailCommentInfo from './childcomps/DetailCommentInfo'
 import GoodsList from '../../components/content/goods/GoodsList'
 import {itemListenerMixin} from '../../common/mixin'
 import {debounce} from '@/common/utils'
+import DetailBottomBar from './childcomps/DetailBottomBar'
 export default {
   name:"Detail",
   components: { 
@@ -45,7 +47,8 @@ export default {
     DetailGoodsInfo,
     DetailParamInfo,
     DetailCommentInfo,
-    GoodsList
+    GoodsList,
+    DetailBottomBar
     },
     mixins:[itemListenerMixin],
   data(){
@@ -103,7 +106,7 @@ export default {
            this.theneTopYs[1]=this.$refs.params.$el.offsetTop;
            this.theneTopYs[2]=this.$refs.comment.$el.offsetTop;
            this.theneTopYs[3]=this.$refs.recommend.$el.offsetTop;
-           console.log('property'+this.theneTopYs)
+          //  console.log('property'+this.theneTopYs)
        },100)
   },
   mounted(){
@@ -129,13 +132,13 @@ export default {
     contentScroll(position){
       //1.获取Y值
        const positionY = -position.y;
-      console.log(positionY)
+      // console.log(positionY)
        //2.positionY数组theneTopYs的值之间来确定index的值
        let length=this.theneTopYs.length;
        for(let i=0;i<length;i++){
          if(this.currentIndex!== i && ((i<length-1 && positionY>=this.getThemeTopY[i] && positionY<this.getThemeTopY[i+1]) || (i===length-1 && positionY >= this.getThemeTopY[i]))){
            this.currentIndex=i;
-           console.log(this.currentIndex)
+          //  console.log(this.currentIndex)
            this.$refs.nav.currentIndex=this.currentIndex;
          }
        }
