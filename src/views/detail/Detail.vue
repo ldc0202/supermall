@@ -100,9 +100,10 @@ export default {
        })
        this.getThemeTopY=debounce(()=>{
            this.theneTopYs[0]=0;
-           this.theneTopYs[1]=this.$refs.params.$el.offsetTop;
-           this.theneTopYs[2]=this.$refs.comment.$el.offsetTop;
-           this.theneTopYs[3]=this.$refs.recommend.$el.offsetTop;
+           this.theneTopYs[1]=this.$refs.params.$el.offsetTop-44;
+           this.theneTopYs[2]=this.$refs.comment.$el.offsetTop-44;
+           this.theneTopYs[3]=this.$refs.recommend.$el.offsetTop-44;
+            this.theneTopYs[4]=Number.MAX_VALUE;
            console.log('property'+this.theneTopYs)
        },100)
   },
@@ -129,13 +130,17 @@ export default {
     contentScroll(position){
       //1.获取Y值
        const positionY = -position.y;
-      console.log(positionY)
        //2.positionY数组theneTopYs的值之间来确定index的值
        let length=this.theneTopYs.length;
-       for(let i=0;i<length;i++){
-         if(this.currentIndex!== i && ((i<length-1 && positionY>=this.getThemeTopY[i] && positionY<this.getThemeTopY[i+1]) || (i===length-1 && positionY >= this.getThemeTopY[i]))){
+      //  for(let i=0;i<length;i++){
+      //    if(this.currentIndex!== i && ((i<length-1 && positionY>=this.theneTopYs[i] && positionY<this.theneTopYs[i+1]) || (i===length-1 && positionY >= this.theneTopYs[i]))){
+      //      this.currentIndex=i;
+      //      this.$refs.nav.currentIndex=this.currentIndex;
+      //    }
+      //  }
+      for(let i=0;i<length-1;i++){
+         if(this.currentIndex!== i && positionY>=this.theneTopYs[i] && positionY<this.theneTopYs[i+1]){
            this.currentIndex=i;
-           console.log(this.currentIndex)
            this.$refs.nav.currentIndex=this.currentIndex;
          }
        }
