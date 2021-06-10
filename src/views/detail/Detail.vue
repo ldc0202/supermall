@@ -19,6 +19,7 @@
     </scroll>
       <!-- 底部工具栏 -->
       <detail-bottom-bar></detail-bottom-bar>
+      <back-top @click.native="backClick"  v-show="isShowBackTop"/>
   </div>
 </template>
 
@@ -36,6 +37,7 @@ import GoodsList from '../../components/content/goods/GoodsList'
 import {itemListenerMixin} from '../../common/mixin'
 import {debounce} from '@/common/utils'
 import DetailBottomBar from './childcomps/DetailBottomBar'
+import BackTop from 'components/content/backTop/BackTop'
 export default {
   name:"Detail",
   components: { 
@@ -48,7 +50,8 @@ export default {
     DetailParamInfo,
     DetailCommentInfo,
     GoodsList,
-    DetailBottomBar
+    DetailBottomBar,
+    BackTop
     },
     mixins:[itemListenerMixin],
   data(){
@@ -63,7 +66,8 @@ export default {
           recommends:[],
           theneTopYs:[],
           getThemeTopY:null,
-          currentIndex:0
+          currentIndex:0,
+           isShowBackTop:false,
       }
   },
   created(){
@@ -120,6 +124,9 @@ export default {
     // this.$bus.$on('itemImageLoad',this.itemImgListener)
   },
   methods:{
+    backClick(){
+       this.$refs.scroll.scrollTo(0,0);
+    },
     imageLoad(){
       // console.log('detailGoodInfo----imageLoad')
        this.$refs.scroll.refresh()
@@ -130,6 +137,7 @@ export default {
        this.$refs.scroll.scrollTo(0,-this.theneTopYs[index],100)
     },
     contentScroll(position){
+       this.isShowBackTop=(-position.y)>1000
       //1.获取Y值
        const positionY = -position.y;
       // console.log(positionY)
