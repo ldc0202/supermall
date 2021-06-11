@@ -37,7 +37,8 @@ import GoodsList from '../../components/content/goods/GoodsList'
 import {itemListenerMixin} from '../../common/mixin'
 import {debounce} from '@/common/utils'
 import DetailBottomBar from './childcomps/DetailBottomBar'
-import BackTop from 'components/content/backTop/BackTop'
+// import BackTop from 'components/content/backTop/BackTop'
+import {backTopMixin} from "common/mixin"
 export default {
   name:"Detail",
   components: { 
@@ -51,9 +52,8 @@ export default {
     DetailCommentInfo,
     GoodsList,
     DetailBottomBar,
-    BackTop
     },
-    mixins:[itemListenerMixin],
+    mixins:[itemListenerMixin,backTopMixin],
   data(){
       return{
           iid:null,
@@ -66,8 +66,7 @@ export default {
           recommends:[],
           theneTopYs:[],
           getThemeTopY:null,
-          currentIndex:0,
-           isShowBackTop:false,
+          currentIndex:0
       }
   },
   created(){
@@ -124,9 +123,9 @@ export default {
     // this.$bus.$on('itemImageLoad',this.itemImgListener)
   },
   methods:{
-    backClick(){
-       this.$refs.scroll.scrollTo(0,0);
-    },
+    // backClick(){
+    //    this.$refs.scroll.scrollTo(0,0);
+    // },
     imageLoad(){
       // console.log('detailGoodInfo----imageLoad')
        this.$refs.scroll.refresh()
@@ -137,7 +136,8 @@ export default {
        this.$refs.scroll.scrollTo(0,-this.theneTopYs[index],100)
     },
     contentScroll(position){
-       this.isShowBackTop=(-position.y)>1000
+      //  this.isShowBackTop=(-position.y)>1000
+      this.listenShowBackTop(position)
       //1.获取Y值
        const positionY = -position.y;
       // console.log(positionY)
