@@ -2,6 +2,11 @@
   <div id="detail">
     <detail-nav-bar class="detail-nav-bar" @titleClick="titleClick" ref="nav"></detail-nav-bar>
     <scroll ref="scroll" class="detail-content" :pullUpLoad="true" @scroll="contentScroll" :probeType="3" >
+      <div>
+        <ul>
+          <li v-for="item,index in this.$store.state.cartList" :key="index">{{index}}</li>
+        </ul>
+      </div>
       <!-- 详情轮播图 -->
       <detail-swiper :top-images="topImages"/>
       <!-- 详情基本信息 -->
@@ -18,7 +23,7 @@
       <goods-list ref="recommend" :goods="recommends"/>
     </scroll>
       <!-- 底部工具栏 -->
-      <detail-bottom-bar></detail-bottom-bar>
+      <detail-bottom-bar @addToCart='addToCart'></detail-bottom-bar>
       <back-top @click.native="backClick"  v-show="isShowBackTop"/>
   </div>
 </template>
@@ -126,6 +131,19 @@ export default {
     // backClick(){
     //    this.$refs.scroll.scrollTo(0,0);
     // },
+    addToCart(){
+      // console.log("aaaaaa")
+      //1.获取购物车需要展示的信息
+      const product={}
+      product.image=this.topImages;
+      product.title=this.goods.title;
+      product.desc=this.goods.desc;
+      product.price=this.goods.realPrice;
+      product.iid=this.iid;
+      //2.将商品添加到购物车里
+      // this.$store.commit('addCart',product)
+      this.$store.dispatch('addCart',product)
+    },
     imageLoad(){
       // console.log('detailGoodInfo----imageLoad')
        this.$refs.scroll.refresh()
