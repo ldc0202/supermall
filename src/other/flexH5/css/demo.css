@@ -1,0 +1,95 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+body{
+    background:darkturquoise;
+}
+h3{
+    font-size: 28px;
+    text-align: center;
+    margin-top: 100px;
+    /* 属性控制文本的大小写。 */
+    text-transform: uppercase;
+    /* 属性增加或减少字符间的空白（字符间距） */
+    letter-spacing: 3px;
+}
+.main{
+    width: 300px;
+    height: 300px;
+    border: 1px solid red;
+    margin: 50px auto;
+}
+svg{
+  fill: none;
+}
+.load{
+     /* 边框线的宽 */
+     stroke-width: 20;
+     /* 设置虚线边框 虚线的长度10 虚线的间隔10 当设成等于周长的值时开到完整的圆
+     因为虚线长度和间隔相等 */
+     stroke-dasharray: 252;
+     /* 设置偏移量：
+     大于等于周长的长度时看不到，因为超出范围的会看不到，通知动态改变该值让动起来 */
+     stroke-dashoffset: 0;
+     animation: load 1.5s ease-in-out infinite;
+     /* 设置动画中心点 */
+     transform-origin: center center;
+}
+.one{
+    /* 边框线 */
+    stroke: red;
+}
+.two{
+    /* 边框线 */
+    stroke: yellow;
+    /* 延时动画 */
+    animation-delay: 0.1s;
+}
+.three{
+    /* 边框线 */
+    stroke: lightskyblue;
+    /* 延时动画 */
+    animation-delay: 0.2s;
+}
+.point{
+    /* infinite无限循环 */
+    animation: buncle 1s ease-in-out infinite;
+}
+.point1{
+    fill: red;
+}
+.point2{
+    fill: lightskyblue;
+    animation-delay: 0.1s;
+}
+.point3{
+    fill: yellow;
+    animation-delay: 0.2s;
+}
+
+@keyframes load {
+   0%,100%{
+       /* 0%,100%时完全看不见 */
+       stroke-dashoffset: 252;
+   }
+   50%{
+    /* 50%在超始位置附近到到一小截 */
+    stroke-dashoffset: 230;
+   }
+   100%{
+       /* 旋转360度 */
+       transform: rotate(360deg);
+   }
+}
+@keyframes buncle{
+    0%,100%{
+        transform: translateY(0);
+    }
+    50%{
+        transform: translateY(-10px);
+    }
+}
+    
+
+

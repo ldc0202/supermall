@@ -12,7 +12,7 @@ body{
 .search-index{
     display: flex;
     /* 固定定位跟父级没有关系 它以屏幕为准 */
-    position: flex;
+    position: absolute;
     top: 0;
     /* left: 50%; */
     /* 固定的盒子应该有宽度 */
@@ -22,6 +22,9 @@ body{
     max-width: 540px;
     min-width: 320px;
     height: 44px;
+    background-color: #f6f6f6;
+    border-top: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
     /* background-color: pink; */
 }
 .search{
@@ -31,9 +34,247 @@ body{
     /* box-sizing: border-box; */
     margin: 6px 10px;
     background-color:#fff;
+    padding: 3px 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 2);
 }
 .user{
     width: 44px;
     height: 44px;
-    background-color:purple;
+    /* background-color:purple; */
+    text-align: center;
+    color: #2eaae0;
+    font-size: 18px;
+}
+a{
+    text-decoration: none;
+    color: #222;
+}
+.search-index a div{
+    height: 15px;
+    margin-top: 15px;
+    margin-bottom: 2px;
+}
+.search-index a{
+    margin-top: -10px;
+   font-size: 14px;
+}
+.focus{
+    width: 100%;
+    height: 198px;
+    margin-top: 44px;
+    background-color: #ffffff;
+}
+@font-face {
+    font-family: 'iconfont';
+    src: url('../css/iconfont/iconfont.ttf?t=1625150972046') format('truetype');
+}
+.iconfont {
+    font-family: "iconfont" !important;
+    font-size: 16px;
+    font-style: normal;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+/* 局部导航栏 */
+ul{
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+.local-nav{
+    display: flex;
+    list-style: none;
+    height: 64px;
+    background-color: #ffffff;
+    margin: 3px 6px;
+    border-radius: 8px;
+    align-content: center;
+}
+.local-nav li{
+    flex: 1;
+}
+.local-nav a{
+    display: flex;
+    flex-direction: column;
+    /* 侧轴单行居中对齐 */
+    align-items: center;
+    margin-top: 8px;
+    font-size: 12px;
+}
+.local-nav li [class^="local-nav-icon"] {
+    width: 32px;
+    height: 32px;
+    background-color: pink;
+    background: url(../images/02.png) no-repeat 0 0;
+    background-size: 32px auto;
+}
+.local-nav li .local-nav-icon1{
+    background-position: 0 0;
+}
+.local-nav li .local-nav-icon2{
+    background-position: 0 -29px;
+}
+.local-nav li .local-nav-icon3{
+    background-position: 0 -59px;
+}
+.local-nav li .local-nav-icon4{
+    background-position: 0 -89px;
+}
+.local-nav li .local-nav-icon5{
+    background-position: 0 -118px;
+}
+nav{
+    border-radius: 8px;
+    /* 上面是0，左右4，下3 */
+    margin: 0 4px 3px;
+    overflow: hidden;
+   
+}
+.nav-common{
+    display: flex;
+    height: 88px;
+    /* background-color:pink; */
+}
+.nav-common:nth-child(2){
+    margin: 3px 0px;
+}
+.nav-items{
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+   
+
+}
+
+.nav-items a{
+   flex: 1;
+   text-align: center;
+   line-height: 44px;
+   color: #fff;
+   font-size: 14px;
+   text-shadow: 1px 1px rgba(0, 0, 0, 0.2);
+}
+.nav-items a:nth-child(1){
+   border-bottom: 1px solid #fff;
+}
+.nav-items:nth-child(1) a{
+    border: 0;
+   
+}
+.nav-items:nth-child(1) a::after{
+    content: "";
+    display: block;
+    width: 84px;
+    height: 84px;
+    margin-top: -27px;
+    margin-left: 45px;
+    background: url(../images/nav.png) no-repeat 0px -254px;
+    background-size: 84 auto;
+}
+/* -n+2就是向面两个 */
+.nav-items:nth-child(-n+2){
+    border-right: 1px solid #fff;
+
+}
+
+.nav-common:nth-child(1){
+     /* 背景渐变必须添加浏览器私有前缀 */
+    background: -webkit-linear-gradient(left,#fa5a55,#fa994d);
+}
+.nav-common:nth-child(2){
+    /* 背景渐变必须添加浏览器私有前缀 */
+   background: -webkit-linear-gradient(left,#4b90ed,#53bced);
+}
+.nav-common:nth-child(3){
+    /* 背景渐变必须添加浏览器私有前缀 */
+   background: -webkit-linear-gradient(left,#34c2a9,#6cd559);
+}
+.subnav-entry{
+    border-radius: 8px;
+    background-color: #fff;
+    /* 上下，左右 */
+    margin: 0 4px;
+    display: flex;
+    flex-wrap: wrap;
+    padding: 20px;
+    box-shadow: 0px 2px rgba(0, 0, 0, 0.1);
+}
+.subnav-entry li{
+    /* 里面的子盒子可以写%相对于父级来说的 */
+    flex: 20%;
+}
+.subnav-entry a{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 10px;
+}
+.subnav-entry-icon{
+    width: 28px;
+    height: 28px;
+    margin-top: 5px;
+    background-color: pink;
+    margin-top: 0px;
+}
+.sales-box{
+  border-top: 1px solid #ccc;
+  background-color: #fff;
+  margin: 4px;
+}
+.sales-hd{
+    height: 44px;
+    border-bottom: 1px solid #ccc;
+    position: relative;
+}
+.sales-hd h2{
+    position: relative;
+    text-indent: -999px;
+    overflow: hidden;
+}
+.sales-hd h2::after{
+    position:absolute;
+    top: 8px;
+    left: 20px;
+    content: "";
+    width: 79px;
+    height: 15px;
+    background-color: pink;
+    background: url(../images/03.jpg) no-repeat 0 0;
+    background-size: 65px auto;
+}
+.more{
+    position:absolute;
+    right: 5px;
+    top: 0px;
+    background: -webkit-linear-gradient(left,#ff506c,#ff6bc6);
+    border-radius: 15px;
+    padding: 3px 20px 3px 10px;
+    color: #fff;
+
+}
+.more::after{
+    content: "";
+    position: absolute;
+    top: 9px;
+    right: 9px;
+    width: 7px;
+    height: 7px;
+    border-top: 2px solid #fff;
+    border-right: 2px solid #fff;
+    transform: rotate(45deg);
+}
+.row{
+    display: flex;
+    border-bottom: 2px solid #eee;
+}
+.row a{
+    flex: 50%;
+    padding: 10px 20px;
+   
+}
+.row a img{
+    width: 100%;
+}
+.row a:nth-child(1){
+    border-right: 2px solid #eee;
 }
